@@ -1,7 +1,60 @@
+<div style="width: 300px">
+  <div id="overview" style="width: 300px; display: flex">
+    <div id="image-num" style="width: 150px">
+      <img
+        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%- selectedMember %>.png"
+        alt="Member image"
+      /><span>No. <%- selectedMember %></span>
+    </div>
+    <div id="name-level"><%- pokemonData.name.toUpperCase() %> <br /></div>
+  </div>
+  <div style="width: 300px; display: flex">
+    <div style="width: 150px">
+      ATTACK <br />
+      DEFENSE <br />
+      SPEED <br />
+      SPECIAL
+    </div>
+    <div style="width: 150px">
+      <div id="types">
+        <% pokemonData.types.forEach(t => {%>
+        <div class="type">
+          TYPE<strong><%- t.slot %></strong>/<br />
+          <%- t.type.name %>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</div>
 <div>
-	<div id='overview'>
-		<div id='image-num'><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/<%- selectedMember %>.png" alt="Member image">No. <%- selectedMember %></div>
-		<div id='name-level'>Gamera L10 HP: 32/32 STATUS/OK</div>
-	</div>
-	<div>ATTACK 17 DEFENSE 20 SPEED 17 SPECIAL 17</div>
+  <h3>Evolution:</h3>
+  <% if (pokemonSpecies.evolves_from_species !== null) {%>
+  <h4>Evolves from:</h4>
+  <p><%- pokemonSpecies.evolves_from_species.name.toUpperCase() %></p>
+  <% }; %> <% if (pokemonData.name === pokemonEvolution.chain.species.name) {%>
+  <h4>Evolves into:</h4>
+  <p>
+    <%- pokemonEvolution.chain.evolves_to[0].species.name.toUpperCase() %> 
+    triggered by 
+    <%- pokemonEvolution.chain.evolves_to[0].evolution_details[0].trigger.name.toUpperCase() %>
+    <% if (pokemonEvolution.chain.evolves_to[0].evolution_details[0].trigger.name === 'level-up') {%> 
+      at min. level <%- pokemonEvolution.chain.evolves_to[0].evolution_details[0].min_level %> 
+    <% } %>
+  </p>
+  <% } else if (pokemonSpecies.evolves_from_species) { 
+    if (pokemonSpecies.evolves_from_species.name === pokemonEvolution.chain.species.name) { 
+      if (pokemonEvolution.chain.evolves_to[0].evolves_to[0]) { %> 
+      <h4>Evolves into:</h4>
+      <p>
+        <%- pokemonEvolution.chain.evolves_to[0].evolves_to[0].species.name.toUpperCase() %> 
+        triggered by 
+        <%- pokemonEvolution.chain.evolves_to[0].evolves_to[0].evolution_details[0].trigger.name.toUpperCase() %> 
+        <% if (pokemonEvolution.chain.evolves_to[0].evolves_to[0].evolution_details[0].trigger.name === 'level-up') {%> 
+          at min. level <%- pokemonEvolution.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level %> 
+        <% } %>
+      </p>
+  <% }
+    }
+  }; %>
 </div>
