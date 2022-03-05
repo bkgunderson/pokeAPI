@@ -1,0 +1,14 @@
+body {
+  padding: 50px;
+}
+
+nav ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav .nes-btn {
+  margin-right: 1rem;
+}
